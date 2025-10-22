@@ -11,74 +11,7 @@ const passwordError = document.querySelector("#password-error");
 // Used to trigger on change event listener validations after clicking submit for the first time.
 let isInitialSubmit = false; 
 
-// Determines and displays first name error message
-// function showFirstNameError() {
-
-//     let errorMessage = "";
-
-//     if (firstName.validity.valueMissing) {
-//         errorMessage = "First Name cannot be empty";
-//     }
-
-//     if (errorMessage) {
-//         firstNameError.textContent = errorMessage;
-//         const fieldContainer = firstName.closest(".form__group");
-//         fieldContainer.classList.add("form__group--error");
-//     }
-// }
-
-// Determines and displays last name error message
-// function showLastNameError() {
-
-//     let errorMessage = "";
-
-//     if (lastName.validity.valueMissing) {
-//         errorMessage = "Last Name cannot be empty";
-//     }
-
-//     if (errorMessage) {
-//         lastNameError.textContent = errorMessage;
-//         const fieldContainer = lastName.closest(".form__group");
-//         fieldContainer.classList.add("form__group--error");
-//     }
-// }
-
-// Determines and displays email address error message
-// function showEmailError() {
-
-//     let errorMessage = "";
-
-//     if (email.validity.valueMissing) {
-//         errorMessage = "Email Address cannot be empty";
-//     } else if (email.validity.typeMismatch) {
-//         errorMessage = "Looks like this is not an email";
-//     }
-
-//     if (errorMessage) {
-//         emailError.textContent = errorMessage;
-//         const fieldContainer = email.closest(".form__group");
-//         fieldContainer.classList.add("form__group--error");
-//     }
-// }
-
-// Determines and displays password error message
-// function showPasswordError() {
-
-//     let errorMessage = "";
-
-//     if (password.validity.valueMissing) {
-//         errorMessage = "Password cannot be empty";
-//     } else if (password.validity.tooShort) {
-//         errorMessage = `You password must be 8 characters long. You entered ${password.value.length}`;
-//     }
-
-//     if (errorMessage) {
-//         passwordError.textContent = errorMessage;
-//         const fieldContainer = password.closest(".form__group");
-//         fieldContainer.classList.add("form__group--error");
-//     }
-// }
-
+// This determines and displays error messages for invalid fields
 function showError(field, errorElement, validations) {
 
     let errorMessage = "";
@@ -101,6 +34,13 @@ function showError(field, errorElement, validations) {
 
 }
 
+// Clears error messages and styling for valid inputs
+function clearError(field, errorElement) {
+    errorElement.textContent = "";
+    const fieldContainer = field.closest(".form__group");
+    fieldContainer.classList.remove("form__group--error");
+}
+
 function handleFirstNameChange() {
 
     // Will only run after initial submission
@@ -112,9 +52,7 @@ function handleFirstNameChange() {
             return;
         }
 
-        firstNameError.textContent = "";
-        const fieldContainer = firstName.closest(".form__group");
-        fieldContainer.classList.remove("form__group--error");
+        clearError(firstName, firstNameError);
     }
 }
 
@@ -129,9 +67,7 @@ function handleLastNameChange() {
             return;
         }
 
-        lastNameError.textContent = "";
-        const fieldContainer = lastName.closest(".form__group");
-        fieldContainer.classList.remove("form__group--error");
+        clearError(lastName, lastNameError);
     }
 }
 
@@ -147,9 +83,7 @@ function handleEmailChange() {
             return;
         }
 
-        emailError.textContent = "";
-        const fieldContainer = email.closest(".form__group");
-        fieldContainer.classList.remove("form__group--error");
+        clearError(email, emailError);
     }
 }
 
@@ -165,9 +99,7 @@ function handlePasswordChange() {
             return;
         }
 
-        passwordError.textContent = "";
-        const fieldContainer = password.closest(".form__group");
-        fieldContainer.classList.remove("form__group--error");
+        clearError(password, passwordError);
     }
 }
 
