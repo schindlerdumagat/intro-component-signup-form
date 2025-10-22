@@ -11,7 +11,25 @@ const passwordError = document.querySelector("#password-error");
 // Used to trigger on change event listener validations after clicking submit for the first time.
 let isInitialSubmit = false; 
 
-// This determines and displays error messages for invalid fields
+const firstNameValidations = {
+    valueMissing: "First Name cannot be empty",
+};
+
+const lastNameValidations = {
+    valueMissing: "Last Name cannot be empty",
+};
+
+const emailValidations = {
+    valueMissing: "Email Address cannot be empty",
+    typeMismatch: "Looks like this is not an email",
+}
+
+const passwordValidations = {
+    valueMissing: "Password cannot be empty",
+    tooShort: `You password must be 8 characters long.`,
+}
+
+// Determines and displays error messages for invalid fields
 function showError(field, errorElement, validations) {
 
     let errorMessage = "";
@@ -31,7 +49,6 @@ function showError(field, errorElement, validations) {
         errorElement.textContent = "";
         fieldContainer.classList.remove("form__group--error");
     }
-
 }
 
 // Clears error messages and styling for valid inputs
@@ -41,92 +58,40 @@ function clearError(field, errorElement) {
     fieldContainer.classList.remove("form__group--error");
 }
 
-function handleFirstNameChange() {
-
+// Event handler for form submit and input changes
+function handleInputChange(field, errorElement, validations) {
     // Will only run after initial submission
     if (isInitialSubmit) {
-        if (!firstName.validity.valid) {
-            showError(firstName, firstNameError, {
-                valueMissing: "First Name cannot be empty",
-            });
+        if (!field.validity.valid) {
+            showError(field, errorElement, validations);
             return;
         }
 
-        clearError(firstName, firstNameError);
+        clearError(field, errorElement);
     }
 }
 
-function handleLastNameChange() {
+// Event Listeners
 
-    // Will only run after initial submission
-    if (isInitialSubmit) {
-        if (!lastName.validity.valid) {
-            showError(lastName, lastNameError, {
-                valueMissing: "Last Name cannot be empty",
-            });
-            return;
-        }
-
-        clearError(lastName, lastNameError);
-    }
-}
-
-function handleEmailChange() {
-
-    // Will only run after initial submission
-    if (isInitialSubmit) {
-        if (!email.validity.valid) {
-            showError(email, emailError, {
-                valueMissing: "Email Address cannot be empty",
-                typeMismatch: "Looks like this is not an email",
-            });
-            return;
-        }
-
-        clearError(email, emailError);
-    }
-}
-
-function handlePasswordChange() {
-
-    // Will only run after initial submission
-    if (isInitialSubmit) {
-        if (!password.validity.valid) {
-            showError(password, passwordError, {
-                valueMissing: "Password cannot be empty",
-                tooShort: `You password must be 8 characters long. You entered ${password.value.length}`,
-            });
-            return;
-        }
-
-        clearError(password, passwordError);
-    }
-}
-
-firstName.addEventListener("input", () => {
-    handleFirstNameChange();
-});
-
-lastName.addEventListener("input", () => {
-    handleLastNameChange();
-});
-
-email.addEventListener("input", () => {
-    handleEmailChange();
-});
-
-password.addEventListener("input", () => {
-    handlePasswordChange();
-});
+firstName.addEventListener("input", () => handleInputChange(firstName, firstNameError, firstNameValidations));
+lastName.addEventListener("input", () => handleInputChange(lastName, lastNameError, lastNameValidations));
+email.addEventListener("input", () => handleInputChange(email, emailError, emailValidations));
+password.addEventListener("input", () => handleInputChange(password, passwordError, { 
+    ...passwordValidations, 
+    tooShort: `You password must be 8 characters long. You entered ${password.value.length}` // tooShort property is set explicitly to retrieve the current value of the password field on change. 
+}));
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     isInitialSubmit = true;
 
-    handleFirstNameChange();
-    handleLastNameChange();
-    handleEmailChange();
-    handlePasswordChange();
+    handleInputChange(firstName, firstNameError, firstNameValidations);
+    handleInputChange(lastName, lastNameError, lastNameValidations);
+    handleInputChange(email, emailError, emailValidations);
+    handleInputChange(password, passwordError, { 
+        ...passwordValidations, 
+        tooShort: `You password must be 8 characters long. You entered ${password.value.length}` // tooShort property is set explicitly to retrieve the current value of the password field on submit.
+    });
 
     const isFormValid = form.checkValidity();
 
@@ -134,5 +99,4 @@ form.addEventListener("submit", (e) => {
     if (isFormValid) {
         form.submit();
     }
-
 })
