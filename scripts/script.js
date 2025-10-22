@@ -61,7 +61,7 @@ function showPasswordError() {
     let errorMessage = "";
 
     if (password.validity.valueMissing) {
-        errorMessage = "Email Address cannot be empty";
+        errorMessage = "Password cannot be empty";
     } else if (password.validity.tooShort) {
         errorMessage = `You password must be 8 characters long. You entered ${password.value.length}`;
     }
