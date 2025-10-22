@@ -12,71 +12,93 @@ const passwordError = document.querySelector("#password-error");
 let isInitialSubmit = false; 
 
 // Determines and displays first name error message
-function showFirstNameError() {
+// function showFirstNameError() {
 
-    let errorMessage = "";
+//     let errorMessage = "";
 
-    if (firstName.validity.valueMissing) {
-        errorMessage = "First Name cannot be empty";
-    }
+//     if (firstName.validity.valueMissing) {
+//         errorMessage = "First Name cannot be empty";
+//     }
 
-    if (errorMessage) {
-        firstNameError.textContent = errorMessage;
-        const fieldContainer = firstName.closest(".form__group");
-        fieldContainer.classList.add("form__group--error");
-    }
-}
+//     if (errorMessage) {
+//         firstNameError.textContent = errorMessage;
+//         const fieldContainer = firstName.closest(".form__group");
+//         fieldContainer.classList.add("form__group--error");
+//     }
+// }
 
 // Determines and displays last name error message
-function showLastNameError() {
+// function showLastNameError() {
 
-    let errorMessage = "";
+//     let errorMessage = "";
 
-    if (lastName.validity.valueMissing) {
-        errorMessage = "Last Name cannot be empty";
-    }
+//     if (lastName.validity.valueMissing) {
+//         errorMessage = "Last Name cannot be empty";
+//     }
 
-    if (errorMessage) {
-        lastNameError.textContent = errorMessage;
-        const fieldContainer = lastName.closest(".form__group");
-        fieldContainer.classList.add("form__group--error");
-    }
-}
+//     if (errorMessage) {
+//         lastNameError.textContent = errorMessage;
+//         const fieldContainer = lastName.closest(".form__group");
+//         fieldContainer.classList.add("form__group--error");
+//     }
+// }
 
 // Determines and displays email address error message
-function showEmailError() {
+// function showEmailError() {
 
-    let errorMessage = "";
+//     let errorMessage = "";
 
-    if (email.validity.valueMissing) {
-        errorMessage = "Email Address cannot be empty";
-    } else if (email.validity.typeMismatch) {
-        errorMessage = "Looks like this is not an email";
-    }
+//     if (email.validity.valueMissing) {
+//         errorMessage = "Email Address cannot be empty";
+//     } else if (email.validity.typeMismatch) {
+//         errorMessage = "Looks like this is not an email";
+//     }
 
-    if (errorMessage) {
-        emailError.textContent = errorMessage;
-        const fieldContainer = email.closest(".form__group");
-        fieldContainer.classList.add("form__group--error");
-    }
-}
+//     if (errorMessage) {
+//         emailError.textContent = errorMessage;
+//         const fieldContainer = email.closest(".form__group");
+//         fieldContainer.classList.add("form__group--error");
+//     }
+// }
 
 // Determines and displays password error message
-function showPasswordError() {
+// function showPasswordError() {
+
+//     let errorMessage = "";
+
+//     if (password.validity.valueMissing) {
+//         errorMessage = "Password cannot be empty";
+//     } else if (password.validity.tooShort) {
+//         errorMessage = `You password must be 8 characters long. You entered ${password.value.length}`;
+//     }
+
+//     if (errorMessage) {
+//         passwordError.textContent = errorMessage;
+//         const fieldContainer = password.closest(".form__group");
+//         fieldContainer.classList.add("form__group--error");
+//     }
+// }
+
+function showError(field, errorElement, validations) {
 
     let errorMessage = "";
+    const fieldContainer = field.closest(".form__group");
 
-    if (password.validity.valueMissing) {
-        errorMessage = "Password cannot be empty";
-    } else if (password.validity.tooShort) {
-        errorMessage = `You password must be 8 characters long. You entered ${password.value.length}`;
+    for (const [validateKey, message] of Object.entries(validations)) {
+        if (field.validity[validateKey]) {
+            errorMessage = message;
+            break;
+        }
     }
 
     if (errorMessage) {
-        passwordError.textContent = errorMessage;
-        const fieldContainer = password.closest(".form__group");
+        errorElement.textContent = errorMessage;
         fieldContainer.classList.add("form__group--error");
+    } else {
+        errorElement.textContent = "";
+        fieldContainer.classList.remove("form__group--error");
     }
+
 }
 
 function handleFirstNameChange() {
@@ -84,7 +106,9 @@ function handleFirstNameChange() {
     // Will only run after initial submission
     if (isInitialSubmit) {
         if (!firstName.validity.valid) {
-            showFirstNameError();
+            showError(firstName, firstNameError, {
+                valueMissing: "First Name cannot be empty",
+            });
             return;
         }
 
@@ -99,7 +123,9 @@ function handleLastNameChange() {
     // Will only run after initial submission
     if (isInitialSubmit) {
         if (!lastName.validity.valid) {
-            showLastNameError();
+            showError(lastName, lastNameError, {
+                valueMissing: "Last Name cannot be empty",
+            });
             return;
         }
 
@@ -114,7 +140,10 @@ function handleEmailChange() {
     // Will only run after initial submission
     if (isInitialSubmit) {
         if (!email.validity.valid) {
-            showEmailError();
+            showError(email, emailError, {
+                valueMissing: "Email Address cannot be empty",
+                typeMismatch: "Looks like this is not an email",
+            });
             return;
         }
 
@@ -129,7 +158,10 @@ function handlePasswordChange() {
     // Will only run after initial submission
     if (isInitialSubmit) {
         if (!password.validity.valid) {
-            showPasswordError();
+            showError(password, passwordError, {
+                valueMissing: "Password cannot be empty",
+                tooShort: `You password must be 8 characters long. You entered ${password.value.length}`,
+            });
             return;
         }
 
