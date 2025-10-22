@@ -20,9 +20,11 @@ function showFirstNameError() {
         errorMessage = "First Name cannot be empty";
     }
 
-    firstNameError.textContent = errorMessage;
-    const fieldContainer = firstName.closest(".form__group");
-    fieldContainer.classList.add("form__group--error");
+    if (errorMessage) {
+        firstNameError.textContent = errorMessage;
+        const fieldContainer = firstName.closest(".form__group");
+        fieldContainer.classList.add("form__group--error");
+    }
 }
 
 // Determines and displays last name error message
@@ -34,9 +36,11 @@ function showLastNameError() {
         errorMessage = "Last Name cannot be empty";
     }
 
-    lastNameError.textContent = errorMessage;
-    const fieldContainer = lastName.closest(".form__group");
-    fieldContainer.classList.add("form__group--error");
+    if (errorMessage) {
+        lastNameError.textContent = errorMessage;
+        const fieldContainer = lastName.closest(".form__group");
+        fieldContainer.classList.add("form__group--error");
+    }
 }
 
 // Determines and displays email address error message
@@ -50,9 +54,11 @@ function showEmailError() {
         errorMessage = "Looks like this is not an email";
     }
 
-    emailError.textContent = errorMessage;
-    const fieldContainer = email.closest(".form__group");
-    fieldContainer.classList.add("form__group--error");
+    if (errorMessage) {
+        emailError.textContent = errorMessage;
+        const fieldContainer = email.closest(".form__group");
+        fieldContainer.classList.add("form__group--error");
+    }
 }
 
 // Determines and displays password error message
@@ -66,9 +72,11 @@ function showPasswordError() {
         errorMessage = `You password must be 8 characters long. You entered ${password.value.length}`;
     }
 
-    passwordError.textContent = errorMessage;
-    const fieldContainer = password.closest(".form__group");
-    fieldContainer.classList.add("form__group--error");
+    if (errorMessage) {
+        passwordError.textContent = errorMessage;
+        const fieldContainer = password.closest(".form__group");
+        fieldContainer.classList.add("form__group--error");
+    }
 }
 
 function handleFirstNameChange() {

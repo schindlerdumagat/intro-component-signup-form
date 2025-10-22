@@ -239,12 +239,12 @@ body {
   width: 100%;
   padding-block: var(--space-200);
   padding-inline: clamp(var(--space-300), 1.0229rem + 2.0356vw, var(--space-400));
-  margin-block-end: var(--space-100);
 }
 
 .form__group--error .form__field:invalid {
   border: 2px solid var(--clr-red-400);
   color: var(--clr-red-400);
+  margin-block-end: var(--space-100);
 }
 
 .form__group--error .form__error {
