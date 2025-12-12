@@ -170,7 +170,7 @@ body {
     font-weight: 500;
     line-height: 1.65;
     color: var(--clr-white);
-    background-image: url("/images/bg-intro-mobile.png");
+    background-image: url("../images/bg-intro-mobile.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -258,7 +258,7 @@ body {
 
 .form__group--error::after {
   content: "";
-  background-image: url("/images/icon-error.svg");
+  background-image: url("../images/icon-error.svg");
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
@@ -302,7 +302,7 @@ body {
 
 @media screen and (min-width: 48em) {
     body {
-        background-image: url("/images/bg-intro-desktop.png");
+        background-image: url("../images/bg-intro-desktop.png");
     }
 
     .header__title {
